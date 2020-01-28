@@ -24,7 +24,12 @@ func main() {
 	if err != nil {
 		sugaredLogger.Fatalf("error creating client: %v", err)
 	}
-	client.DLSizes = []int{1000, 1500, 2000}
+	if len(cfg.DLSizes) > 0 {
+		client.DLSizes = cfg.DLSizes
+	}
+	if len(cfg.UPSizes) > 0 {
+		client.ULSizes = cfg.ULSizes
+	}
 
 	for _, c := range cfg.Cables {
 		cbl, err := cable.New(c.Name, client, sugaredLogger)
