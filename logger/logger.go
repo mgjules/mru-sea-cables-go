@@ -8,29 +8,20 @@ import (
 )
 
 // New returns a new logger
-func New(dev, verbose bool) *zap.SugaredLogger {
-	var encoderCfg zapcore.EncoderConfig
-	if dev {
-		encoderCfg = zap.NewDevelopmentEncoderConfig()
-	} else {
-		encoderCfg = zap.NewProductionEncoderConfig()
-	}
-
+func New(dev, debug bool) *zap.SugaredLogger {
 	atom := zap.NewAtomicLevel()
 
 	switch {
-	case dev && verbose:
+	case debug:
 		atom.SetLevel(zapcore.DebugLevel)
-	case dev && !verbose:
+	case dev:
 		atom.SetLevel(zapcore.InfoLevel)
-	case !dev && verbose:
+	default:
 		atom.SetLevel(zapcore.WarnLevel)
-	case dev && !verbose:
-		atom.SetLevel(zapcore.ErrorLevel)
 	}
 
 	logger := zap.New(zapcore.NewCore(
-		zapcore.NewConsoleEncoder(encoderCfg),
+		zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig()),
 		zapcore.Lock(os.Stdout),
 		atom,
 	))

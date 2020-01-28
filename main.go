@@ -16,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sugaredLogger := logger.New(cfg.DEV, cfg.Verbose)
+	sugaredLogger := logger.New(cfg.DEV, cfg.Debug)
 
 	client, err := speedtest.NewDefaultClient()
 	if err != nil {

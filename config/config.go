@@ -9,7 +9,7 @@ import (
 // Config represents the main configuration
 type Config struct {
 	DEV     bool  `toml:"dev"`
-	Verbose bool  `toml:"verbose"`
+	Debug   bool  `toml:"debug"`
 	DLSizes []int `toml:"download_sizes"`
 	ULSizes []int `toml:"upload_sizes"`
 	Cables  []struct {
