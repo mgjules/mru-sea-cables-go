@@ -27,7 +27,7 @@ func main() {
 	if len(cfg.DLSizes) > 0 {
 		client.DLSizes = cfg.DLSizes
 	}
-	if len(cfg.UPSizes) > 0 {
+	if len(cfg.ULSizes) > 0 {
 		client.ULSizes = cfg.ULSizes
 	}
 
