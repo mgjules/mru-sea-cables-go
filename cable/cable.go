@@ -11,7 +11,7 @@ import (
 // Cable represents information about a cable
 type Cable struct {
 	name    string
-	servers []http.Server
+	servers map[string]http.Server
 
 	client *speedtest.Client
 }
@@ -26,19 +26,24 @@ func New(name string, client *speedtest.Client) (*Cable, error) {
 	}
 
 	return &Cable{
-		name:   name,
-		client: client,
+		name:    name,
+		servers: make(map[string]http.Server),
+		client:  client,
 	}, nil
 }
 
 // AddServer adds a new server to cable
 func (c *Cable) AddServer(id string) error {
-	server, err := c.client.GetServer("")
-	if err != nil {
-		return fmt.Errorf("failed to add server: %w", err)
+	if id == "" {
+		return fmt.Errorf("[%s] id can't be empty", c.name)
 	}
 
-	c.servers = append(c.servers, server)
+	server, err := c.client.GetServer(id)
+	if err != nil {
+		return fmt.Errorf("[%s] failed to add server: %w", c.name, err)
+	}
+
+	c.servers[id] = server
 
 	return nil
 }
