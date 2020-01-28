@@ -6,6 +6,7 @@ import (
 
 	"github.com/kylegrantlucas/speedtest"
 	"github.com/kylegrantlucas/speedtest/http"
+	"go.uber.org/zap"
 )
 
 // Cable represents information about a cable
@@ -14,21 +15,25 @@ type Cable struct {
 	servers map[string]http.Server
 
 	client *speedtest.Client
+	logger *zap.SugaredLogger
 }
 
 // New returns a new cable
-func New(name string, client *speedtest.Client) (*Cable, error) {
+func New(name string, client *speedtest.Client, logger *zap.SugaredLogger) (*Cable, error) {
 	switch {
 	case name == "":
 		return nil, errors.New("name can't be empty")
 	case client == nil:
 		return nil, errors.New("client can't be nil")
+	case logger == nil:
+		return nil, errors.New("logger can't be nil")
 	}
 
 	return &Cable{
 		name:    name,
 		servers: make(map[string]http.Server),
 		client:  client,
+		logger:  logger.With("cable name", name),
 	}, nil
 }
 
@@ -50,67 +55,68 @@ func (c *Cable) AddServer(id string) error {
 
 // Latency returns the average latency on the cable
 func (c Cable) Latency() float64 {
-	var latencies []float64
+	var (
+		latencies float64
+		n         float64
+	)
 	for _, server := range c.servers {
 		if server.Latency == 0.0 {
 			continue
 		}
 
-		latencies = append(latencies, server.Latency)
+		latencies += server.Latency
+		n += 1.0
 	}
 
-	var total float64
-	for _, latency := range latencies {
-		total += latency
-	}
-
-	return total / float64(len(latencies))
+	return latencies / n
 }
 
 // DLSpeed returns the average download speed on the cable
 func (c Cable) DLSpeed() float64 {
-	var speeds []float64
+	var (
+		speeds float64
+		n      float64
+	)
 	for _, server := range c.servers {
 		dmbps, err := c.client.Download(server)
 		if err != nil {
+			c.logger.Warnw("failed retrieving download speed", "server ID", server.ID, "error", err)
 			continue
 		}
 
 		if dmbps == 0.0 {
+			c.logger.Warnw("download speed is zero", "server ID", server.ID)
 			continue
 		}
 
-		speeds = append(speeds, dmbps)
+		speeds += dmbps
+		n += 1.0
 	}
 
-	var total float64
-	for _, speed := range speeds {
-		total += speed
-	}
-
-	return total / float64(len(speeds))
+	return speeds / n
 }
 
 // UPSpeed returns the average upload speed on the cable
 func (c Cable) UPSpeed() float64 {
-	var speeds []float64
+	var (
+		speeds float64
+		n      float64
+	)
 	for _, server := range c.servers {
 		umbps, err := c.client.Upload(server)
 		if err != nil {
+			c.logger.Warnw("failed retrieving upload speed", "server ID", server.ID, "error", err)
 			continue
 		}
 
 		if umbps == 0.0 {
+			c.logger.Warnw("download speed is zero", "server ID", server.ID)
 			continue
 		}
 
-		speeds = append(speeds, umbps)
+		speeds += umbps
+		n += 1.0
 	}
 
-	var total float64
-	for _, speed := range speeds {
-		total += speed
-	}
-
-	return total / float64(len(speeds))
+	return speeds / n
 }
