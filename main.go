@@ -11,8 +11,6 @@ import (
 )
 
 func main() {
-	var err error
-
 	cfg, err := config.LoadConfig("mru-cables.toml")
 	if err != nil {
 		log.Fatal(err)
