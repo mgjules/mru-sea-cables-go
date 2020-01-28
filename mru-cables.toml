@@ -1,0 +1,22 @@
+DEV = true
+Verbose = true
+
+[[cables]]
+name = "LION"
+servers = [ "17987" ]
+
+[[cables]]
+name = "SAFE1"
+servers = [ "24682" ]
+
+[[cables]]
+name = "SAFE2"
+servers = [ "1285" ]
+
+[[cables]]
+name = "SAFE3"
+servers = [ "12544" ]
+
+[[cables]]
+name = "MARS"
+servers = [ "27454" ]

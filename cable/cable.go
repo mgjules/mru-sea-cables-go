@@ -41,6 +41,11 @@ func New(name string, client *speedtest.Client, logger *zap.SugaredLogger) (*Cab
 	}, nil
 }
 
+// Name returns the name of the cable
+func (c *Cable) Name() string {
+	return c.name
+}
+
 // AddServer adds a new server to cable
 func (c *Cable) AddServer(id string) error {
 	if id == "" {
