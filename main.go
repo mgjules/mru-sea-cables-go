@@ -12,8 +12,6 @@ import (
 	"github.com/julesmike/mru-sea-cables-go/logger"
 )
 
-var json = jsoniter.ConfigCompatibleWithStandardLibrary
-
 // Result represents a speedtest result
 type Result struct {
 	Latency   float64   `json:"latency"`
@@ -23,6 +21,8 @@ type Result struct {
 }
 
 func main() {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+
 	cfg, err := config.LoadConfig("mru-cables.toml")
 	if err != nil {
 		log.Fatal(err)
