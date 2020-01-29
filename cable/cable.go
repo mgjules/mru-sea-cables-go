@@ -104,8 +104,8 @@ func (c Cable) DLSpeed() float64 {
 	return 0
 }
 
-// UPSpeed returns the average upload speed on the cable
-func (c Cable) UPSpeed() float64 {
+// ULSpeed returns the average upload speed on the cable
+func (c Cable) ULSpeed() float64 {
 	for _, s := range c.servers {
 		dmbps, err := c.client.Upload(s)
 		if err != nil {

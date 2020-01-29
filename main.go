@@ -1,14 +1,24 @@
 package main
 
 import (
-	"fmt"
+	"io/ioutil"
 	"log"
 
+	jsoniter "github.com/json-iterator/go"
 	"github.com/julesmike/mru-sea-cables-go/cable"
 	"github.com/julesmike/mru-sea-cables-go/config"
 	"github.com/julesmike/mru-sea-cables-go/logger"
 	"github.com/kylegrantlucas/speedtest"
 )
+
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
+
+// Result represents a speedtest result
+type Result struct {
+	Latency float64 `json:"latency"`
+	DLSpeed float64 `json:"download"`
+	ULSpeed float64 `json:"upload"`
+}
 
 func main() {
 	cfg, err := config.LoadConfig("mru-cables.toml")
@@ -29,6 +39,7 @@ func main() {
 		client.ULSizes = cfg.ULSizes
 	}
 
+	results := make(map[string]Result)
 	for _, c := range cfg.Cables {
 		cbl, err := cable.New(c.Name, client, sugaredLogger)
 		if err != nil {
@@ -41,6 +52,25 @@ func main() {
 			}
 		}
 
-		fmt.Printf("[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps\n", cbl.Name(), cbl.Latency(), cbl.DLSpeed(), cbl.UPSpeed())
+		latency := cbl.Latency()
+		dlspeed := cbl.DLSpeed()
+		ulspeed := cbl.ULSpeed()
+
+		results[cbl.Name()] = Result{
+			Latency: latency,
+			DLSpeed: dlspeed,
+			ULSpeed: ulspeed,
+		}
+
+		sugaredLogger.Debugf("[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps\n", cbl.Name(), latency, dlspeed, ulspeed)
+	}
+
+	data, err := json.Marshal(results)
+	if err != nil {
+		sugaredLogger.Fatalf("error marshaling results: %v", err)
+	}
+
+	if err := ioutil.WriteFile("data/realtime.json", data, 0644); err != nil {
+		sugaredLogger.Fatalf("error writing results: %v", err)
 	}
 }
