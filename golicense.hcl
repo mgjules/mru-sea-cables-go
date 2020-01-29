@@ -1,0 +1,1 @@
+allow = ["MIT", "Apache-2.0"]
