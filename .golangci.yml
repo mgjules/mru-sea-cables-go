@@ -64,6 +64,7 @@ linters:
     - dupl
     - errcheck
     - funlen
+    - gochecknoglobals
     - gochecknoinits
     - gocognit
     - goconst
@@ -98,9 +99,6 @@ linters:
     - whitespace
     - wsl
 
-  # don't enable:
-  # - gochecknoglobals
-
 # issues:
 #   # Excluding configuration per-path, per-linter, per-text and per-source
 #   exclude-rules:
@@ -108,7 +106,9 @@ linters:
 #       linters:
 #         - gomnd
 
-# run:
+run:
+  timeout: 30s
+  modules-download-mode: vendor
 #   skip-dirs:
 #     - test/testdata_etc
 #     - internal/cache
