@@ -9,7 +9,7 @@ import (
 	"github.com/julesmike/mru-sea-cables-go/cable"
 	"github.com/julesmike/mru-sea-cables-go/config"
 	"github.com/julesmike/mru-sea-cables-go/logger"
-	"github.com/kylegrantlucas/speedtest"
+	"github.com/JulesMike/speedtest"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary

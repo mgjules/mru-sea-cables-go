@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/JulesMike/speedtest/http"
+	"github.com/JulesMike/speedtest/util"
 	"github.com/dchest/uniuri"
-	"github.com/kylegrantlucas/speedtest/http"
-	"github.com/kylegrantlucas/speedtest/util"
 )
 
 var (

@@ -1,15 +1,15 @@
 # github.com/BurntSushi/toml v0.3.1
 github.com/BurntSushi/toml
+# github.com/JulesMike/speedtest v1.0.0
+github.com/JulesMike/speedtest
+github.com/JulesMike/speedtest/coords
+github.com/JulesMike/speedtest/http
+github.com/JulesMike/speedtest/util
+github.com/JulesMike/speedtest/xml
 # github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9
 github.com/dchest/uniuri
 # github.com/json-iterator/go v1.1.9
 github.com/json-iterator/go
-# github.com/kylegrantlucas/speedtest v0.0.0-20180419014002-f8512f58e7ea
-github.com/kylegrantlucas/speedtest
-github.com/kylegrantlucas/speedtest/coords
-github.com/kylegrantlucas/speedtest/http
-github.com/kylegrantlucas/speedtest/util
-github.com/kylegrantlucas/speedtest/xml
 # github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742

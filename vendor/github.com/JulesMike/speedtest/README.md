@@ -1,5 +1,5 @@
 # speedtest
-[![CircleCI](https://circleci.com/gh/kylegrantlucas/speedtest.svg?style=shield)](https://circleci.com/gh/kylegrantlucas/speedtest) [![Maintainability](https://api.codeclimate.com/v1/badges/2130b46a52f698b3eaf1/maintainability)](https://codeclimate.com/github/kylegrantlucas/speedtest/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/2130b46a52f698b3eaf1/test_coverage)](https://codeclimate.com/github/kylegrantlucas/speedtest/test_coverage)
+[![CircleCI](https://circleci.com/gh/JulesMike/speedtest.svg?style=shield)](https://circleci.com/gh/JulesMike/speedtest) [![Maintainability](https://api.codeclimate.com/v1/badges/2130b46a52f698b3eaf1/maintainability)](https://codeclimate.com/github/JulesMike/speedtest/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/2130b46a52f698b3eaf1/test_coverage)](https://codeclimate.com/github/JulesMike/speedtest/test_coverage)
 
 A golang package for running speedtests against speedtest.net.
 
@@ -10,7 +10,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/kylegrantlucas/speedtest"
+	"github.com/JulesMike/speedtest"
 )
 
 func main() {
@@ -47,7 +47,7 @@ Major thanks to @zpeters for the excellent [github.com/zpeters/speedtest](https:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kylegrantlucas/speedtest. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/JulesMike/speedtest. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/kylegrantlucas/speedtest"
-	"github.com/kylegrantlucas/speedtest/http"
+	"github.com/JulesMike/speedtest"
+	"github.com/JulesMike/speedtest/http"
 	"go.uber.org/zap"
 )
 
