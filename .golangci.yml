@@ -1,4 +1,13 @@
 linters-settings:
+  depguard:
+    list-type: whitelist
+    include-go-root: false
+    packages:
+      - github.com/JulesMike/speedtest
+      - github.com/julesmike/mru-sea-cables-go
+      - github.com/BurntSushi/toml
+      - go.uber.org/zap
+      - github.com/json-iterator/go
   dupl:
     threshold: 100
   funlen:
@@ -7,6 +16,12 @@ linters-settings:
   goconst:
     min-len: 2
     min-occurrences: 2
+  godox:
+    keywords:
+      - TODO
+      - FIXME
+      - BUG
+      - HACK
   gocritic:
     enabled-tags:
       - diagnostic
@@ -16,10 +31,6 @@ linters-settings:
       - style
     disabled-checks:
       - dupImport # https://github.com/go-critic/go-critic/issues/845
-      - ifElseChain
-      - octalLiteral
-      - whyNoLint
-      - wrapperFunc
   gocyclo:
     min-complexity: 15
   goimports:
@@ -33,13 +44,6 @@ linters-settings:
         checks: argument,case,condition,return
   govet:
     check-shadowing: true
-    settings:
-      printf:
-        funcs:
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
   lll:
     line-length: 140
   maligned:
@@ -54,6 +58,7 @@ linters:
   enable:
     - bodyclose
     - deadcode
+    - depguard
     - dogsled
     - dupl
     - errcheck
@@ -94,7 +99,6 @@ linters:
 
   # don't enable:
   # - gochecknoglobals
-  # - depguard
 
 # issues:
 #   # Excluding configuration per-path, per-linter, per-text and per-source
