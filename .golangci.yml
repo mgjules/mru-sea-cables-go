@@ -10,6 +10,9 @@ linters-settings:
       - github.com/json-iterator/go
   dupl:
     threshold: 100
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
   funlen:
     lines: 100
     statements: 50
