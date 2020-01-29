@@ -12,7 +12,7 @@ import (
 // Cable represents information about a cable
 type Cable struct {
 	name    string
-	servers map[string]http.Server
+	servers map[string]*http.Server
 
 	client *speedtest.Client
 	logger *zap.SugaredLogger
@@ -35,7 +35,7 @@ func New(name string, client *speedtest.Client, logger *zap.SugaredLogger) (*Cab
 
 	return &Cable{
 		name:    name,
-		servers: make(map[string]http.Server),
+		servers: make(map[string]*http.Server),
 		client:  client,
 		logger:  logger,
 	}, nil
@@ -61,7 +61,7 @@ func (c *Cable) AddServer(id string) error {
 
 	c.logger.Infow("added server", "ID", id, "name", server.Name, "country", server.Country)
 
-	c.servers[id] = server
+	c.servers[id] = &server
 
 	return nil
 }
@@ -88,7 +88,7 @@ func (c Cable) Latency() float64 {
 // DLSpeed returns the average download speed on the cable
 func (c Cable) DLSpeed() float64 {
 	for _, s := range c.servers {
-		dmbps, err := c.client.Download(s)
+		dmbps, err := c.client.Download(*s)
 		if err != nil {
 			c.logger.Warnw("failed retrieving download speed", "server ID", s.ID, "error", err)
 			continue
@@ -107,7 +107,7 @@ func (c Cable) DLSpeed() float64 {
 // ULSpeed returns the average upload speed on the cable
 func (c Cable) ULSpeed() float64 {
 	for _, s := range c.servers {
-		dmbps, err := c.client.Upload(s)
+		dmbps, err := c.client.Upload(*s)
 		if err != nil {
 			c.logger.Warnw("failed retrieving upload speed", "server ID", s.ID, "error", err)
 			continue
