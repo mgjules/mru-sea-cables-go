@@ -75,7 +75,7 @@ func (c Cable) Latency() float64 {
 			continue
 		}
 
-		if server.Latency == 0.0 {
+		if server.Latency == 0 {
 			continue
 		}
 

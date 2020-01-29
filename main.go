@@ -65,7 +65,13 @@ func main() {
 			Timestamp: time.Now(),
 		}
 
-		sugaredLogger.Debugf("[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps\n", cbl.Name(), latency, dlspeed, ulspeed)
+		sugaredLogger.Debugf(
+			"[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps\n",
+			cbl.Name(),
+			latency,
+			dlspeed,
+			ulspeed,
+		)
 	}
 
 	data, err := json.Marshal(results)
