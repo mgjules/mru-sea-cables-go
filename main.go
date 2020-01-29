@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"time"
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/julesmike/mru-sea-cables-go/cable"
@@ -15,9 +16,10 @@ var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // Result represents a speedtest result
 type Result struct {
-	Latency float64 `json:"latency"`
-	DLSpeed float64 `json:"download"`
-	ULSpeed float64 `json:"upload"`
+	Latency   float64   `json:"latency"`
+	DLSpeed   float64   `json:"download"`
+	ULSpeed   float64   `json:"upload"`
+	Timestamp time.Time `json:"timestamp"`
 }
 
 func main() {
@@ -57,9 +59,10 @@ func main() {
 		ulspeed := cbl.ULSpeed()
 
 		results[cbl.Name()] = Result{
-			Latency: latency,
-			DLSpeed: dlspeed,
-			ULSpeed: ulspeed,
+			Latency:   latency,
+			DLSpeed:   dlspeed,
+			ULSpeed:   ulspeed,
+			Timestamp: time.Now(),
 		}
 
 		sugaredLogger.Debugf("[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps\n", cbl.Name(), latency, dlspeed, ulspeed)
