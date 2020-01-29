@@ -1,4 +1,4 @@
-clinters-settings:
+linters-settings:
   dupl:
     threshold: 100
   funlen:
@@ -59,9 +59,11 @@ linters:
     - errcheck
     - funlen
     - gochecknoinits
+    - gocognit
     - goconst
     - gocritic
     - gocyclo
+    - godox
     - gofmt
     - goimports
     - golint
@@ -73,8 +75,10 @@ linters:
     - ineffassign
     - interfacer
     - lll
+    - maligned
     - misspell
     - nakedret
+    - prealloc
     - rowserrcheck
     - scopelint
     - staticcheck
@@ -86,14 +90,11 @@ linters:
     - unused
     - varcheck
     - whitespace
+    - wsl
 
   # don't enable:
   # - gochecknoglobals
-  # - gocognit
-  # - godox
-  # - maligned
   # - depguard
-  # - prealloc
 
 # issues:
 #   # Excluding configuration per-path, per-linter, per-text and per-source
