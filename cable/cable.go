@@ -68,6 +68,8 @@ func (c *Cable) AddServer(id string) error {
 
 // Latency returns the average latency on the cable
 func (c Cable) Latency() float64 {
+	c.logger.Debug("retrieving latency...")
+
 	for _, s := range c.servers {
 		server, err := c.client.GetServer(s.ID)
 		if err != nil {
@@ -87,6 +89,8 @@ func (c Cable) Latency() float64 {
 
 // DLSpeed returns the average download speed on the cable
 func (c Cable) DLSpeed() float64 {
+	c.logger.Debug("retrieving download speed...")
+
 	for _, s := range c.servers {
 		dmbps, err := c.client.Download(*s)
 		if err != nil {
@@ -106,6 +110,8 @@ func (c Cable) DLSpeed() float64 {
 
 // ULSpeed returns the average upload speed on the cable
 func (c Cable) ULSpeed() float64 {
+	c.logger.Debug("retrieving upload speed...")
+
 	for _, s := range c.servers {
 		dmbps, err := c.client.Upload(*s)
 		if err != nil {

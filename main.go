@@ -69,7 +69,7 @@ func main() {
 		}
 
 		sugaredLogger.Debugf(
-			"[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps\n",
+			"[%s] Latency: %3.2f ms | Download: %3.2f Mbps | Upload: %3.2f Mbps",
 			cbl.Name(),
 			latency,
 			dlspeed,
