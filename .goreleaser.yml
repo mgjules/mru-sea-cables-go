@@ -40,3 +40,7 @@ archives:
     format_overrides:
     - goos: windows
       format: zip
+    files:
+      - LICENSE
+      - README.md
+      - mru-cables.toml
