@@ -1,8 +1,8 @@
 .PHONY: build
 
-buildrun: check build run
+buildrun: lint build run
 
-check:
+lint:
 	@golangci-lint run
 
 # Do NOT run too often (i.e rate-limiting GitHub)
