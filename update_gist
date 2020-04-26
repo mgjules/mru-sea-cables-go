@@ -1,0 +1,25 @@
+#!/bin/bash
+
+GIST_ID="add gist id here"
+GITHUB_TOKEN="add git token here"
+
+# Filepath
+FILEPATH="./data/realtime.json"
+
+# Sanitize content
+CONTENT=$(sed -e 's/\r//' -e's/\t/\\t/g' -e 's/"/\\"/g' "${FILEPATH}" | awk '{ printf($0 "\\n") }')
+
+# JSON Request
+read -r -d '' BODY <<EOF
+{
+    "public": true,
+    "files": {
+    "${FILEPATH}": {
+        "content": "${CONTENT}"
+    }
+    }
+}
+EOF
+
+# CURL PATCH
+curl -X PATCH -d "${BODY}" "https://api.github.com/gists/$GIST_ID" -H "Authorization: token $GITHUB_TOKEN"
