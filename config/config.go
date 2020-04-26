@@ -8,11 +8,13 @@ import (
 
 // Config represents the main configuration
 type Config struct {
-	DEV     bool  `toml:"dev"`
-	Debug   bool  `toml:"debug"`
-	DLSizes []int `toml:"download_sizes"`
-	ULSizes []int `toml:"upload_sizes"`
-	Cables  []struct {
+	DEV         bool   `toml:"dev"`
+	Debug       bool   `toml:"debug"`
+	DLSizes     []int  `toml:"download_sizes"`
+	ULSizes     []int  `toml:"upload_sizes"`
+	GistID      string `toml:"gist_id"`
+	GithubToken string `toml:"github_token"`
+	Cables      []struct {
 		Name    string   `toml:"name"`
 		Servers []string `toml:"servers"`
 	} `toml:"cables"`

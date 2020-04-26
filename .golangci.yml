@@ -8,6 +8,8 @@ linters-settings:
       - github.com/BurntSushi/toml
       - go.uber.org/zap
       - github.com/json-iterator/go
+      - github.com/google/go-github
+      - golang.org/x/oauth2
   dupl:
     threshold: 100
   errcheck:
