@@ -14,9 +14,9 @@ read -r -d '' BODY <<EOF
 {
     "public": true,
     "files": {
-    "${FILEPATH}": {
-        "content": "${CONTENT}"
-    }
+        "realtime.json": {
+            "content": "${CONTENT}"
+        }
     }
 }
 EOF
