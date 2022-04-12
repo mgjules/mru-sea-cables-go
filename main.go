@@ -9,12 +9,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/JulesMike/speedtest"
 	"github.com/google/go-github/github"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/julesmike/mru-sea-cables-go/cable"
-	"github.com/julesmike/mru-sea-cables-go/config"
-	"github.com/julesmike/mru-sea-cables-go/logger"
+	"github.com/mgjules/mru-sea-cables-go/cable"
+	"github.com/mgjules/mru-sea-cables-go/config"
+	"github.com/mgjules/mru-sea-cables-go/logger"
+	"github.com/mgjules/speedtest"
 	"go.uber.org/zap"
 	"golang.org/x/oauth2"
 )
@@ -33,7 +33,7 @@ type Result struct {
 }
 
 func main() {
-	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	// if config file does not exist, create from .dist version
 	if _, err := os.Stat(configfile); os.IsNotExist(err) {

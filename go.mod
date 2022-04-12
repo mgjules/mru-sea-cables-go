@@ -1,12 +1,12 @@
-module github.com/julesmike/mru-sea-cables-go
+module github.com/mgjules/mru-sea-cables-go
 
 go 1.18
 
 require (
 	github.com/BurntSushi/toml v1.1.0
-	github.com/JulesMike/speedtest v1.0.0
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/json-iterator/go v1.1.12
+	github.com/mgjules/speedtest v1.0.1
 	go.uber.org/zap v1.21.0
 	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a
 )

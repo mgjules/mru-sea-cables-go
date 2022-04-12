@@ -3,8 +3,8 @@ linters-settings:
     list-type: whitelist
     include-go-root: false
     packages:
-      - github.com/JulesMike/speedtest
-      - github.com/julesmike/mru-sea-cables-go
+      - github.com/mgjules/speedtest
+      - github.com/mgjules/mru-sea-cables-go
       - github.com/BurntSushi/toml
       - go.uber.org/zap
       - github.com/json-iterator/go
