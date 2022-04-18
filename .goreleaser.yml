@@ -39,4 +39,4 @@ archives:
     files:
       - LICENSE
       - README.md
-      - mru-cables.toml
+      - mru-cables.toml.dist
