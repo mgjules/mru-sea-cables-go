@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,6 +21,7 @@ import (
 const (
 	configfile = "mru-cables.toml"
 	datafile   = "realtime.json"
+	writePerm  = 0o600
 )
 
 // Result represents a speedtest result
@@ -37,9 +37,7 @@ func main() {
 
 	// if config file does not exist, create from .dist version
 	if _, err := os.Stat(configfile); os.IsNotExist(err) {
-		if _, err := copy(configfile+".dist", configfile); err != nil {
-			log.Fatalf("error creating default config: %v", err)
-		}
+		log.Fatalf("config file does not exist: %v", err)
 	}
 
 	cfg, err := config.LoadConfig(configfile)
@@ -64,15 +62,17 @@ func main() {
 
 	results := make(map[string]Result)
 
-	for _, c := range cfg.Cables {
-		cbl, err := cable.New(c.Name, client, sugaredLogger)
-		if err != nil {
-			sugaredLogger.Fatalf("Failed creating new cable: %v", err)
+	for i := range cfg.Cables {
+		c := &cfg.Cables[i]
+
+		cbl, cblErr := cable.New(c.Name, client, sugaredLogger)
+		if cblErr != nil {
+			sugaredLogger.Fatalf("Failed creating new cable: %v", cblErr)
 		}
 
 		for _, s := range c.Servers {
-			if err := cbl.AddServer(s); err != nil {
-				sugaredLogger.Errorf("Failed adding new server: %v", err)
+			if sErr := cbl.AddServer(s); err != nil {
+				sugaredLogger.Errorf("Failed adding new server: %v", sErr)
 			}
 		}
 
@@ -98,50 +98,21 @@ func main() {
 
 	data, err := json.Marshal(results)
 	if err != nil {
-		sugaredLogger.Fatalf("error marshaling results: %v", err)
+		sugaredLogger.Fatalf("error marshalling results: %v", err)
 	}
 
-	if err := ioutil.WriteFile("data/"+datafile, data, 0644); err != nil {
+	if err := ioutil.WriteFile("data/"+datafile, data, writePerm); err != nil {
 		sugaredLogger.Fatalf("error writing results: %v", err)
 	}
 
-	if err := saveToGist(cfg.GistID, cfg.GithubToken, data, sugaredLogger); err != nil {
+	if err := saveToGist(context.TODO(), cfg.GistID, cfg.GithubToken, data, sugaredLogger); err != nil {
 		sugaredLogger.Fatal(err)
 	}
 }
 
-// Credit: https://opensource.com/article/18/6/copying-files-go
-func copy(src, dst string) (int64, error) {
-	sourceFileStat, err := os.Stat(src)
-	if err != nil {
-		return 0, err
-	}
-
-	if !sourceFileStat.Mode().IsRegular() {
-		return 0, fmt.Errorf("%s is not a regular file", src)
-	}
-
-	source, err := os.Open(src)
-	if err != nil {
-		return 0, err
-	}
-	defer source.Close()
-
-	destination, err := os.Create(dst)
-	if err != nil {
-		return 0, err
-	}
-	defer destination.Close()
-
-	nBytes, err := io.Copy(destination, source)
-
-	return nBytes, err
-}
-
 // saveToGist saves data using given id and token
-func saveToGist(id, token string, data []byte, sugaredLogger *zap.SugaredLogger) error {
+func saveToGist(ctx context.Context, id, token string, data []byte, sugaredLogger *zap.SugaredLogger) error {
 	if id != "" && token != "" {
-		ctx := context.Background()
 		ts := oauth2.StaticTokenSource(
 			&oauth2.Token{AccessToken: token},
 		)
@@ -154,13 +125,14 @@ func saveToGist(id, token string, data []byte, sugaredLogger *zap.SugaredLogger)
 
 		gist, _, err := client.Gists.Get(ctx, id)
 		if err != nil {
-			return fmt.Errorf("error retrieving gist: %v", err)
+			return fmt.Errorf("error retrieving gist: %w", err)
 		}
 
 		gistLogger.Debug("retrieved gist: %s", gist.ID)
 
 		// Change relevant file in gist
-		for _, gistFile := range gist.Files {
+		for i := range gist.Files {
+			gistFile := gist.Files[i]
 			if *gistFile.Filename != datafile {
 				continue
 			}
@@ -172,7 +144,7 @@ func saveToGist(id, token string, data []byte, sugaredLogger *zap.SugaredLogger)
 		gistLogger.Debug("saving gist...")
 
 		if _, _, err := client.Gists.Edit(ctx, *gist.ID, gist); err != nil {
-			return fmt.Errorf("error saving gist: %v", err)
+			return fmt.Errorf("error saving gist: %w", err)
 		}
 
 		gistLogger.Debug("saved gist")

@@ -74,6 +74,7 @@ func (c Cable) Latency() float64 {
 		server, err := c.client.GetServer(s.ID)
 		if err != nil {
 			c.logger.Warnw("failed retrieving latency", "server ID", s.ID, "error", err)
+
 			continue
 		}
 
@@ -95,6 +96,7 @@ func (c Cable) DLSpeed() float64 {
 		dmbps, err := c.client.Download(*s)
 		if err != nil {
 			c.logger.Warnw("failed retrieving download speed", "server ID", s.ID, "error", err)
+
 			continue
 		}
 
@@ -116,6 +118,7 @@ func (c Cable) ULSpeed() float64 {
 		dmbps, err := c.client.Upload(*s)
 		if err != nil {
 			c.logger.Warnw("failed retrieving upload speed", "server ID", s.ID, "error", err)
+
 			continue
 		}
 
