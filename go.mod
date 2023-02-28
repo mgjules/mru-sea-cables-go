@@ -7,7 +7,7 @@ require (
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/mgjules/speedtest v1.0.1
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.24.0
 	golang.org/x/oauth2 v0.5.0
 )
 
