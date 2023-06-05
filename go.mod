@@ -3,7 +3,7 @@ module github.com/mgjules/mru-sea-cables-go
 go 1.18
 
 require (
-	github.com/BurntSushi/toml v1.2.1
+	github.com/BurntSushi/toml v1.3.0
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/json-iterator/go v1.1.12
 	github.com/mgjules/speedtest v1.0.1
